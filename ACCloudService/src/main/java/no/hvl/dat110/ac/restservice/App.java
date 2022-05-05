@@ -66,7 +66,7 @@ public class App {
 			return gson.toJson(accesslog.get(Integer.parseInt(request.params(":id"))));
 		});
 
-		// TODO: Not sure what to do here to convert body to a int[]
+		// TODO: Not sure what to do here to convert body to a int[]. Also, not tested
 		put("/accessdevice/code", (request, response) -> {
 			int[] tab = new int[request.contentLength()];
 			for (int i = 0; i < request.contentLength(); i++){
