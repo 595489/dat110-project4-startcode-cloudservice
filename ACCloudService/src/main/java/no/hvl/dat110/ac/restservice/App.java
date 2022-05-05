@@ -51,6 +51,8 @@ public class App {
 			accesslog.add(request.body());
 
 			return accesslog.toJson();
+
+//			Gson gson = new Gson();
 //			return gson.toJson("test post");
 		});
 
@@ -58,11 +60,10 @@ public class App {
 			return accesslog.toJson();
 		});
 
-		get("/accessdevice/log/{id}", (request, response) -> {
+		get("/accessdevice/log/:id", (request, response) -> {
 			Gson gson = new Gson();
-			AccessEntry acc = accesslog.get(Integer.parseInt(request.body()));
 
-			return gson.toJson(acc);
+			return gson.toJson(accesslog.get(Integer.parseInt(request.params(":id"))));
 		});
 
 		// TODO: Not sure what to do here to convert body to a int[]
