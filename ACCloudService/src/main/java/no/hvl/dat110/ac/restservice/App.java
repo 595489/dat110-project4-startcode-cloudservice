@@ -48,15 +48,21 @@ public class App {
 		// as per the HTTP/REST operations described in the project description
 
 		post("/accessdevice/log/", (request, response) -> {
-			return accesslog.add(request.body());
+			accesslog.add(request.body());
+
+			return accesslog.toJson();
+//			return gson.toJson("test post");
 		});
 
 		get("/accessdevice/log/", (request, response) -> {
-			return accesslog.log;
+			return accesslog.toJson();
 		});
 
 		get("/accessdevice/log/{id}", (request, response) -> {
-			return accesslog.get(Integer.parseInt(request.body()));
+			Gson gson = new Gson();
+			AccessEntry acc = accesslog.get(Integer.parseInt(request.body()));
+
+			return gson.toJson(acc);
 		});
 
 		// TODO: Not sure what to do here to convert body to a int[]
@@ -66,16 +72,21 @@ public class App {
 				tab[i] = Integer.getInteger(request.body(), i);
 			}
 			accesscode.setAccesscode(tab);
-			return accesscode;
+
+			Gson gson = new Gson();
+
+			return gson.toJson(accesscode);
 		});
 
 		get("/accessdevice/code", (request, response) -> {
-			return accesscode.getAccesscode();
+			Gson gson = new Gson();
+
+			return gson.toJson(accesscode.getAccesscode());
 		});
 
 		delete("/accessdevice/log/", (request, response) -> {
 			accesslog.clear();
-			return accesslog.log;
+			return accesslog.toJson();
 		});
 		
     }
