@@ -6,6 +6,7 @@ import static spark.Spark.port;
 import static spark.Spark.put;
 import static spark.Spark.post;
 import static spark.Spark.delete;
+import static spark.route.HttpMethod.post;
 
 import com.google.gson.Gson;
 
@@ -44,7 +45,38 @@ public class App {
 		});
 		
 		// TODO: implement the routes required for the access control service
-		// as per the HTTP/REST operations describined in the project description
+		// as per the HTTP/REST operations described in the project description
+
+		post("/accessdevice/log/", (request, response) -> {
+			return accesslog.add(request.body());
+		});
+
+		get("/accessdevice/log/", (request, response) -> {
+			return accesslog.log;
+		});
+
+		get("/accessdevice/log/{id}", (request, response) -> {
+			return accesslog.get(Integer.parseInt(request.body()));
+		});
+
+		// TODO: Not sure what to do here to convert body to a int[]
+		put("/accessdevice/code", (request, response) -> {
+			int[] tab = new int[request.contentLength()];
+			for (int i = 0; i < request.contentLength(); i++){
+				tab[i] = Integer.getInteger(request.body(), i);
+			}
+			accesscode.setAccesscode(tab);
+			return accesscode;
+		});
+
+		get("/accessdevice/code", (request, response) -> {
+			return accesscode.getAccesscode();
+		});
+
+		delete("/accessdevice/log/", (request, response) -> {
+			accesslog.clear();
+			return accesslog.log;
+		});
 		
     }
     
