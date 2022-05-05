@@ -26,8 +26,8 @@ public class AccessLog {
 		
 	// TODO: retrieve a specific access entry from the log
 	public AccessEntry get(int id) {
-		
-		return null;
+
+		return log.get(id);
 		
 	}
 	
