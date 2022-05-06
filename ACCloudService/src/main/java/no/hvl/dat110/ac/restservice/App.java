@@ -68,9 +68,14 @@ public class App {
 
 		// TODO: Not sure what to do here to convert body to a int[]. Also, not tested
 		put("/accessdevice/code", (request, response) -> {
-			int[] tab = new int[request.contentLength()];
-			for (int i = 0; i < request.contentLength(); i++){
-				tab[i] = Integer.getInteger(request.body(), i);
+			char[] ctab = request.body().toCharArray();
+			int[] tab = new int[ctab.length];
+			int j = 0;
+			for (int i = 0; i<ctab.length; i++){
+				if (Character.isDigit(ctab[i])){
+					tab[j] = ctab[i]-48;
+					j++;
+				}
 			}
 			accesscode.setAccesscode(tab);
 
